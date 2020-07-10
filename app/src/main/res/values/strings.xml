@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Deudor</string>
+    <string name="title_activity_main">Deudor</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_create">Create</string>
+    <string name="nombre">Digite Nombre</string>
+    <string name="telefono">Digite Teléfono</string>
+    <string name="cantidad">Digite Cantidad</string>
+    <string name="guardar">Guardar</string>
+    <string name="title_read">Read</string>
+    <string name="buscar">Buscar</string>
+    <string name="title_update">update</string>
+    <string name="actualizar">Actualizar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="title_delete">Delete</string>
+    <string name="deudor">Deudor</string>
+    <string name="datos">Datos de Acceso</string>
+    <string name="correo_login">Correo Electrónico</string>
+    <string name="contraseña_login">Contraseña</string>
+    <string name="ingresar_login">Ingresar</string>
+    <string name="login_registro">Registro</string>
+    <string name="imagen_login">loginImagen</string>
+    <string name="titulo_registro">Registro</string>
+    <string name="nombre_registro">Nombre</string>
+    <string name="correo_reg">Correo Electrónico</string>
+    <string name="contrasena_reg">Contraseña</string>
+    <string name="rep_contrasena">Confirmar Contraseña</string>
+    <string name="enviar_reg">Enviar</string>
+    <string name="todo">TODO</string>
+    <string name="nombre_deudor">Nombre Deudor</string>
+    <string name="deuda">Deuda</string>
+    <string name="title_list">List</string>
+    <string name="title_list1">Lista de deudores</string>
+</resources>
