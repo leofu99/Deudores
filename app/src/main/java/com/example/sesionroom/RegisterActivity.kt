@@ -2,17 +2,14 @@ package com.example.sesionroom
 
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
-import com.example.sesionroom.model.UsuarioDAO
-import com.example.sesionroom.model.Usuario
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_register.*
-import java.sql.Types
 import java.util.regex.Pattern
+
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -21,41 +18,40 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        val mAuth : FirebaseAuth = FirebaseAuth.getInstance()
 
         BT_enviar_reg.setOnClickListener {
-            val nombrereg = ET_nombre_reg.text.toString()
-            val correoreg = ET_correo_reg.text.toString()
-            val contrasenareg = ET_contrasena_reg.text.toString()
-            val repcontrasenareg = ET_repita_contrasena_reg.text.toString()
 
-            //val notificacionesreg = CB_notificaciones_reg.isChecked
+            val password = ET_contrasena_reg.text.toString()
+            val email= ET_correo_reg.text.toString()
+            mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(
+                    this
+                ) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            this, "Registro melo.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                       // CrearUsuarioEnBaseDeDatos()
+                        onBackPressed()
 
-            if (nombrereg.isEmpty() || correoreg.isEmpty() || contrasenareg.isEmpty()
-                || repcontrasenareg.isEmpty()
-            ) {
-                Toast.makeText(this, "Por favor, llene todos los campos", Toast.LENGTH_SHORT).show()
-            } else {
-                if (contrasenareg.length < 6) {
-                    Toast.makeText(this, "La contraseña debe ser de minimo 6 digitos", Toast.LENGTH_SHORT).show()
-                }else if (contrasenareg != repcontrasenareg) {
-                    Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
-                }else if(!isValidEmailId(correoreg)){
-                    Toast.makeText(this, "El correo ingresado no es válido", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // If sign in fails, display a message to the user.
+
+
+                        Toast.makeText(
+                            this, "Authentication failed.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.w("TAG","signInWithEmail:failure",task.getException());
+
+                    }
+
+                    // ...
                 }
-                else {
-
-                    val usuario = Usuario(Types.NULL, nombrereg,correoreg,contrasenareg)
-                    val usuarioDAO : UsuarioDAO = SesionRoom.database2.UsuarioDAO()
-                    usuarioDAO.crearUsuario(usuario)
-                    Toast.makeText(this, "El registro ha sido exitoso", Toast.LENGTH_SHORT).show()
-
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-
-                }
-            }
         }
+
 
     }
     private fun isValidEmailId(email: String): Boolean {

@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.sesionroom.R
 import com.example.sesionroom.SesionRoom
-import com.example.sesionroom.model.Deudor
-import com.example.sesionroom.model.DeudorDAO
+import com.example.sesionroom.model.local.Deudor
+import com.example.sesionroom.model.local.DeudorDAO
 import kotlinx.android.synthetic.main.fragment_update.*
 
 class UpdateFragment : Fragment() {
@@ -55,9 +55,10 @@ class UpdateFragment : Fragment() {
         bt_actualizar.setOnClickListener{
             val deudor = Deudor(
                 idDeudor,
-            et_nombre.text.toString(),
-            et_telefono.text.toString(),
-            et_cantidad.text.toString().toLong())
+                et_nombre.text.toString(),
+                et_telefono.text.toString(),
+                et_cantidad.text.toString().toLong()
+            )
             deudorDAO.actualizarDeudor(deudor)
             et_telefono.visibility = View.GONE
             et_cantidad.visibility = View.GONE

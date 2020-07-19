@@ -1,9 +1,8 @@
 package com.example.sesionroom
 import android.app.Application
 import androidx.room.Room
-import com.example.sesionroom.model.DeudorDataBase
-import com.example.sesionroom.model.Usuario
-import com.example.sesionroom.model.UsuarioDataBase
+import com.example.sesionroom.model.local.DeudorDataBase
+import com.example.sesionroom.model.local.UsuarioDataBase
 
 class SesionRoom : Application(){
    companion object{

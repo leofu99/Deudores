@@ -1,6 +1,7 @@
-package com.example.sesionroom.model
+package com.example.sesionroom.model.local
 
 import androidx.room.*
+import com.example.sesionroom.model.local.Deudor
 
 @Dao
 interface DeudorDAO {
@@ -12,10 +13,10 @@ interface DeudorDAO {
     fun buscarDeudor(nombre: String) : Deudor
 
     @Update
-    fun actualizarDeudor(deudor:Deudor)
+    fun actualizarDeudor(deudor: Deudor)
 
     @Delete
-    fun borrarDeudor(deudor:Deudor)
+    fun borrarDeudor(deudor: Deudor)
 
     @Query("SELECT * FROM tabla_deudor")
     fun getDeudores():List<Deudor>

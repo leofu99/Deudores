@@ -1,8 +1,9 @@
-package com.example.sesionroom.model
+package com.example.sesionroom.model.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.sesionroom.model.local.Usuario
 
 @Dao
 interface UsuarioDAO {

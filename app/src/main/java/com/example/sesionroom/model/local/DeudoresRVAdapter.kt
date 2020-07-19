@@ -1,4 +1,4 @@
-package com.example.sesionroom.model
+package com.example.sesionroom.model.local
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -17,7 +17,10 @@ class DeudoresRVAdapter(
         viewType: Int
     ): DeudoresViewHolder {
         var itemView: View = LayoutInflater.from(context).inflate(R.layout.item_deudor, parent,false)
-        return DeudoresViewHolder(itemView,context)
+        return DeudoresViewHolder(
+            itemView,
+            context
+        )
 
     }
 
@@ -27,14 +30,14 @@ class DeudoresRVAdapter(
         holder: DeudoresViewHolder,
         position: Int)
     {
-        val deudor :Deudor = deudoresList[position]
+        val deudor : Deudor = deudoresList[position]
         holder.bindDeudor(deudor)
     }
     class DeudoresViewHolder(
         itemView:View,
         context: Context
     ):RecyclerView.ViewHolder(itemView){
-        fun bindDeudor(deudor:Deudor){
+        fun bindDeudor(deudor: Deudor){
             itemView.tv_nombre.text = deudor.nombre
             itemView.tv_deuda.text = deudor.cantidad.toString()
         }

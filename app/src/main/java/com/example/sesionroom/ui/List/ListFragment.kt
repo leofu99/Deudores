@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sesionroom.R
 import com.example.sesionroom.SesionRoom
-import com.example.sesionroom.model.Deudor
-import com.example.sesionroom.model.DeudorDAO
-import com.example.sesionroom.model.DeudoresRVAdapter
+import com.example.sesionroom.model.local.Deudor
+import com.example.sesionroom.model.local.DeudorDAO
+import com.example.sesionroom.model.local.DeudoresRVAdapter
 
 class ListFragment : Fragment() {
 var allDeudores: List<Deudor> = emptyList()
@@ -29,12 +29,13 @@ var allDeudores: List<Deudor> = emptyList()
             false)
 
         rv_deudores.setHasFixedSize(true)
-        var deudorDAO :DeudorDAO = SesionRoom.database.DeudorDAO()
+        var deudorDAO : DeudorDAO = SesionRoom.database.DeudorDAO()
         allDeudores = deudorDAO.getDeudores()
-        var deudoresRVAdapter = DeudoresRVAdapter(
-            requireActivity().applicationContext,
-            allDeudores as ArrayList<Deudor>
-        )
+        var deudoresRVAdapter =
+            DeudoresRVAdapter(
+                requireActivity().applicationContext,
+                allDeudores as ArrayList<Deudor>
+            )
         rv_deudores.adapter = deudoresRVAdapter
         deudoresRVAdapter.notifyDataSetChanged()
         return root
