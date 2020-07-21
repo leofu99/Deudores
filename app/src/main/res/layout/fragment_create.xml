@@ -1,52 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.create.CreateFragment">
 
+
+    <ImageView
+        android:id="@+id/iv_foto"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@android:drawable/ic_menu_camera"
+        android:contentDescription="@string/todo" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/et_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/nombre" />
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/nombre"
+            android:inputType="textPersonName"
+            android:autofillHints="" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/et_telefono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
             android:hint="@string/telefono"
-            android:inputType="number" />
+            android:inputType="number"
+            android:autofillHints="" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/et_cantidad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
             android:hint="@string/cantidad"
-            android:inputType="number" />
+            android:inputType="number"
+            android:autofillHints="" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/bt_guardar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/botonredondo"
         android:text="@string/guardar"
-        android:textColor="@color/design_default_color_background" />
+        android:textColor="@color/cardview_light_background"
+        android:textStyle="bold"
+        tools:ignore="PrivateResource" />
 </LinearLayout>

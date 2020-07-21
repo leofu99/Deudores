@@ -1,8 +1,9 @@
 package com.example.sesionroom.model.remote
 
 class DeudorRemote(
-    val id: String?,
-    val nombre: String,
-    val teléfono:String,
-    val cantidad:Long
+    val id: String?="",
+    val nombre: String="",
+    val telefono:String="",
+    val cantidad:Long=0,
+    val urlphoto :String=""
 )

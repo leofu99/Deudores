@@ -1,6 +1,11 @@
 package com.example.sesionroom.ui.create
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +19,14 @@ import com.example.sesionroom.model.remote.DeudorRemote
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_create.*
+import java.io.ByteArrayOutputStream
 import java.sql.Types.NULL
 
 
 class CreateFragment : Fragment() {
-
+    private val REQUEST_IMAGE_CAPTURE = 1234
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +43,10 @@ class CreateFragment : Fragment() {
 
 
 
+        iv_foto.setOnClickListener{
+            dispatchTakePictureIntent()
+
+        }
 
 
         bt_guardar.setOnClickListener{
@@ -45,7 +56,7 @@ class CreateFragment : Fragment() {
             
 
             if (nombre.isNotEmpty() && telefono.isNotEmpty() && cantidad.isNotEmpty() ) {
-                cuardarEnRoom(cantidad, nombre, telefono)
+                //cuardarEnRoom(cantidad, nombre, telefono)
                 guardarEnFirebase(nombre,telefono,cantidad)
                 cleanEditText()
             }
@@ -57,6 +68,22 @@ class CreateFragment : Fragment() {
 
 
 
+        }
+    }
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{takePictureIntent->
+            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also{
+                startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
+            }
+
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK ){
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            iv_foto.setImageBitmap(imageBitmap)
         }
     }
 
@@ -86,16 +113,49 @@ class CreateFragment : Fragment() {
     }
 
     private fun guardarEnFirebase(nombre: String, telefono: String, cantidad: String) {
+
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         val myRef = database.getReference("deudores")
         val id = myRef.push().key
-        val deudor :DeudorRemote= DeudorRemote(
-        id,
-        nombre,
-        telefono,
-        cantidad.toLong()
+        val mStorage = FirebaseStorage.getInstance()
+        val photoRef = mStorage.reference.child(id!!)
+        var urlphoto = ""
 
-        )
-        myRef.child(id!!).setValue(deudor)
+        iv_foto.isDrawingCacheEnabled = true
+        iv_foto.buildDrawingCache()
+        val bitmap = (iv_foto.drawable as BitmapDrawable).bitmap
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        var uploadTask = photoRef.putBytes(data)
+
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            photoRef.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                urlphoto = task.result.toString()
+                val deudor :DeudorRemote= DeudorRemote(
+                    id,
+                    nombre,
+                    telefono,
+                    cantidad.toLong(),
+                    urlphoto
+                )
+                myRef.child(id!!).setValue(deudor)
+            } else {
+
+            }
+        }
+
+
+
+
+
     }
 }
